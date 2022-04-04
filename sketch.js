@@ -2,7 +2,9 @@ let unicorn;
 let uImg;
 let tImg;
 let bImg;
+let cbImg;
 let trains = [];
+let ball=[];
 let soundClassifier;
 
 function preload() {
@@ -10,7 +12,7 @@ function preload() {
   const options = {
     probabilityThreshold: 0.95
   };
-  soundClassifier = ml5.soundClassifier('SpeechCommands18w', options);
+  soundClassifier = ml5.soundClassifier('SpeechCommands18w', options);//?
 
   if(parseInt(playerChar) == 1)
     uImg = loadImage('Giraffe.PNG');
@@ -22,16 +24,20 @@ function preload() {
     uImg = loadImage('Crocodile.PNG');  
   
 
-  tImg = loadImage('train.png');
-  bImg = loadImage('background1.jpg');
+  tImg = loadImage('fire.png');
+  cbImg = loadImage('circus-ball');
+  bImg = loadImage('circus.jpg');
 }
 
 function mousePressed() {
   trains.push(new Train());
+  ball.push(new Ball());
 }
 
 function setup() {
-  createCanvas(800, 450);
+  //image(bImg,10,10);
+  createCanvas(1500, 800,[Path2D]);
+  background(153);
   player = new Player();
   soundClassifier.classify(gotCommand);
 }
@@ -56,12 +62,23 @@ function draw() {
   if (random(1) < 0.005) {
     trains.push(new Train());
   }
+  if (random(1) < 0.005) {
+    ball.push(new Ball());
+  }
 
   background(bImg);
   for (let t of trains) {
     t.move();
     t.show();
     if (player.hits(t)) {
+      console.log('game over');
+      noLoop();
+    }
+  }
+  for (let b of ball) {
+    b.move();
+    b.show();
+    if (player.hits(b)) {
       console.log('game over');
       noLoop();
     }

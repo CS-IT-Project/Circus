@@ -1,4 +1,4 @@
-class Train {
+class Ball {
     constructor() {
       this.r = 100;
       this.x = width;
@@ -11,7 +11,7 @@ class Train {
     }
   
     show() {
-      image(tImg, this.x, this.y, this.r, this.r);
+      image(cbImg, this.x, this.y, this.r, this.r);
   
       // fill(255, 50);
       // ellipseMode(CORNER);
