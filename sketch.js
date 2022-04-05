@@ -1,10 +1,5 @@
-let unicorn;
-let uImg;
-let tImg;
-let bImg;
-let cbImg;
-let trains = [];
-let ball=[];
+let player, pImg, fImg, bImg, cbImg;
+let obstacle = [];
 let soundClassifier;
 
 function preload() {
@@ -15,29 +10,26 @@ function preload() {
   soundClassifier = ml5.soundClassifier('SpeechCommands18w', options);//?
 
   if(parseInt(playerChar) == 1)
-    uImg = loadImage('Giraffe.PNG');
+    pImg = loadImage('images/Giraffe.PNG');
   else if(parseInt(playerChar) == 2)
-    uImg = loadImage('Lion.PNG');
+    pImg = loadImage('images/Lion.PNG');
   else if(parseInt(playerChar) == 3)
-    uImg = loadImage('Rabbit.PNG');
+    pImg = loadImage('images/Rabbit.PNG');
   else if(parseInt(playerChar) == 4)
-    uImg = loadImage('Crocodile.PNG');  
+    pImg = loadImage('images/Crocodile.PNG');  
   
-
-  tImg = loadImage('fire.png');
-  cbImg = loadImage('circus-ball');
-  bImg = loadImage('circus.jpg');
+  fImg = loadImage('images/fire.png');
+  cbImg = loadImage('images/circus-ball.jpg');
+  bImg = loadImage('images/circus.jpg');
 }
 
 function mousePressed() {
-  trains.push(new Train());
-  ball.push(new Ball());
+  obstacle.push(new Obstacle());
 }
 
 function setup() {
   //image(bImg,10,10);
-  createCanvas(1500, 800,[Path2D]);
-  background(153);
+  createCanvas(1300, 700);
   player = new Player();
   soundClassifier.classify(gotCommand);
 }
@@ -52,33 +44,25 @@ function gotCommand(error, results) {
   }
 }
 
-// function keyPressed() {
-//   if (key == ' ') {
-//     unicorn.jump();
-//   }
-// }
+function keyPressed() {
+  if (key == ' ') {
+     player.jump();
+  }
+}
 
 function draw() {
-  if (random(1) < 0.005) {
-    trains.push(new Train());
-  }
-  if (random(1) < 0.005) {
-    ball.push(new Ball());
+  if (random(1) < 0.003) {
+    if(Math.floor(Math.random() * 2) == 0)
+      obstacle.push(new Fire());
+    else
+      obstacle.push(new Ball());
   }
 
   background(bImg);
-  for (let t of trains) {
-    t.move();
-    t.show();
-    if (player.hits(t)) {
-      console.log('game over');
-      noLoop();
-    }
-  }
-  for (let b of ball) {
-    b.move();
-    b.show();
-    if (player.hits(b)) {
+  for (let o of obstacle) {
+    o.move();
+    o.show();
+    if (player.hits(o)) {
       console.log('game over');
       noLoop();
     }

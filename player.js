@@ -1,25 +1,25 @@
 class Player {
     constructor() {
-      this.r = 150;
-      this.x = 90;
+      this.r = 140;
+      this.x = 80;
       this.y = height - this.r;
       this.vy = 0;
       this.gravity = 2;
-      height=700;
+      height = 650;
     }
   
     jump() {
       if (this.y == height - this.r) {
-        this.vy = -35;
+        this.vy = -45;
       }
     }
   
-    hits(train) {
+    hits(obstacle) {
       let x1 = this.x + this.r * 0.5;
       let y1 = this.y + this.r * 0.5;
-      let x2 = train.x + train.r * 0.5;
-      let y2 = train.y + train.r * 0.5;
-      return collideCircleCircle(x1, y1, this.r, x2, y2, train.r);
+      let x2 = obstacle.x + obstacle.r * 0.5;
+      let y2 = obstacle.y + obstacle.r * 0.5;
+      return collideCircleCircle(x1, y1, this.r, x2, y2, obstacle.r);
     }
   
     move() {
@@ -29,7 +29,7 @@ class Player {
     }
   
     show() {
-      image(uImg, this.x, this.y, this.r, this.r);
+      image(pImg, this.x, this.y, this.r, this.r);
   
       // fill(255, 50);
       // ellipseMode(CORNER);
