@@ -2,12 +2,13 @@
     $servername = "localhost";
     $user = "clown";
     $password = "clown1234";
+    $db_name="Database";
 
     // Create connection
-    $conn = new mysqli($servername, $user, $password);
+    $conn = mysqli_connect($servername, $user, $password, $db_name);
 
     // Check connection
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
+    if (!$conn) {
+        echo "Connection failed";
     } 
 ?>

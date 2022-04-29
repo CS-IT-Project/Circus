@@ -1,30 +1,23 @@
 <?php
     include 'connect.php';
-    include 'index.php';
+    session_start();
 
-    $dbname = "Database";
-    $servername = "localhost";
-    $user = "clown";
-    $password = "clown1234";
+    $userName = $_POST['username'];
+    $userPassword = $_POST['userPassword'];
+    $signup = $_POST['signup'];
+    $userScores = '0';
 
-    // Create connection
-    $conn = new mysqli($servername, $user, $password, $dbname);
-    // Check connection
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
-
-    try {
-        $sql = "INSERT INTO Account (userName, userPassword, userScores)
-        VALUES ('$userName', '$userPassword', '$userScores')";
-    }
-    catch (Exception $e) {
-        if ($e->getCode() == 1062);
-            echo "This username is already taken";
-    }
+    $sql = "INSERT INTO Account (userName, userPassword, userScores)
+    VALUES ('$userName', '$userPassword', '$userScores')";
+    
+    if (mysqli_errno() == 1062) {
+        header("Location: login.php?error=Incorrect User Name or Password");
     
     if ($conn->query($sql)) {
-        echo "Your account has been created successfully";
+        $_SESSION['userName'] = $userName;
+        $_SESSION['userScores']= "0";
+        header("Location: home.php");
+        exit();
     }
 
     $conn->close();
