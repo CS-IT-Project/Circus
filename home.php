@@ -14,6 +14,7 @@ session_start();
         <body>
             <h1>Hello, <?php echo $_SESSION['userName']; ?></h1>
             <h1>your Scores: <?php echo $_SESSION['userScores']; ?></h1>
+            <a href="index.html">Play</a>
             <a href="logout.php">Logout</a>
         </body>
     </html>

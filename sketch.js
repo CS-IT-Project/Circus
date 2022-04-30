@@ -1,4 +1,5 @@
 let player, pImg, fImg, bImg, cbImg;
+var scores = 0;
 let obstacle = [];
 let soundClassifier;
 
@@ -7,7 +8,7 @@ function preload() {
   const options = {
     probabilityThreshold: 0.95
   };
-  soundClassifier = ml5.soundClassifier('SpeechCommands18w', options);//?
+  soundClassifier = ml5.soundClassifier('SpeechCommands18w', options);
 
   if(parseInt(playerChar) == 1)
     pImg = loadImage('images/Giraffe.PNG');
@@ -63,11 +64,13 @@ function draw() {
     o.move();
     o.show();
     if (player.hits(o)) {
-      console.log('game over');
+      window.alert("GAME OVER!! your scores: "+scores)
+      setTimeout(() => { location.href='http://127.0.0.1:5500/gameover.html'; }, 2000); 
+      //document.getElementById("scores").innerHTML = 'your scores:' + scores;
       noLoop();
     }
   }
-
+  
   player.show();
   player.move();
 }
