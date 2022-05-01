@@ -1,11 +1,11 @@
 class Player {
     constructor() {
-      this.r = 140;
+      this.r = 130;
       this.x = 80;
       this.y = height - this.r;
       this.vy = 0;
       this.gravity = 2;
-      height = 650;
+      height = 665;
     }
   
     jump() {
@@ -30,10 +30,6 @@ class Player {
   
     show() {
       image(pImg, this.x, this.y, this.r, this.r);
-  
-      // fill(255, 50);
-      // ellipseMode(CORNER);
-      // ellipse(this.x, this.y, this.r, this.r);
     }
   }
   

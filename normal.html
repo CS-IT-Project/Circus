@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.4.1/lib/p5.min.js"></script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.4.1/lib/addons/p5.sound.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/bmoren/p5.collide2D/p5.collide2d.min.js"></script>
+    <script src="https://unpkg.com/ml5@0.3.1/dist/ml5.min.js"></script>
+    <meta charset="utf-8" />
+    <style>
+      html, body {
+        margin: 0;
+        padding: 100;
+       
+      }
+      canvas {
+        display: block;
+      }
+      </style>
+  </head>
+  
+  <body>
+    <script src="player.js"></script>
+    <script src="fire.js"></script>
+    <script src="ball.js"></script>
+    <script>
+      let player, pImg, fImg, bImg, cbImg;
+      let obstacle = [];
+      let soundClassifier;
+
+      function preload() {
+        var playerChar = window.prompt("Chose youre character: \n1. Giraffe \n2. Lion \n3. Rabbit \n4. Crocodile");
+        const options = {
+          probabilityThreshold: 0.95
+        };
+
+        soundClassifier = ml5.soundClassifier('SpeechCommands18w', options);
+        if(parseInt(playerChar) == 1)
+          pImg = loadImage('images/Giraffe.PNG');
+        else if(parseInt(playerChar) == 2)
+          pImg = loadImage('images/Lion.PNG');
+        else if(parseInt(playerChar) == 3)
+          pImg = loadImage('images/Rabbit.PNG');
+        else if(parseInt(playerChar) == 4)
+          pImg = loadImage('images/Crocodile.PNG');  
+  
+        fImg = loadImage('images/fire.png');
+        cbImg = loadImage('images/circus-ball.jpg');
+        bImg = loadImage('images/circus.jpg');
+      }
+
+      function mousePressed() {
+        obstacle.push(new Obstacle());
+      }
+      
+      function setup() {
+        createCanvas(1290, 735);
+        player = new Player();
+        soundClassifier.classify(gotCommand);
+      }
+      
+      function gotCommand(error, results) {
+        if (error) {
+          console.error(error);
+        }
+        console.log(results[0].label, results[0].confidence);
+        if (results[0].label == 'up') {
+          player.jump();
+        }
+      }
+      
+      function keyPressed() {
+        if (key == ' ') {
+          player.jump();
+        }
+      }
+      
+      function draw() {
+        if (random(1) < 0.006) {
+          if(Math.floor(Math.random() * 2) == 0)
+            obstacle.push(new Fire());
+          else
+            obstacle.push(new Ball());
+        }
+        
+        background(bImg);
+        for (let o of obstacle) {
+          o.move();
+          o.show();
+          if (player.hits(o)) {
+            location.href='http://localhost:8080/Circus/gameover.html'; 
+            noLoop();
+          }
+        }
+        player.show();
+        player.move();
+      }
+    </script>
+  </body>
+</html>

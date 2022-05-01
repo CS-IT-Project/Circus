@@ -1,31 +1,28 @@
 
 <?php 
 session_start();
-
-//if(isset($_SESSION['userName'])){
 ?>
-
     <!DOCTYPE html>
     <html>
         <head>
             <title>Home</title>
-            <link rel="stylesheet" type="text/css" href="style.css">
+            <link rel="stylesheet" type="text/css" href="homestyle.css">
         </head>
         <body>
-            <h1>Hello, <?php echo $_SESSION['userName']; ?></h1>
-            <h1>your Scores: <?php echo $_SESSION['userScores']; ?></h1>
-            <a href="index.html">Play</a>
-            <a href="logout.php">Logout</a>
+            <a class="float" href="logout.php"><img src="images/logout.png" width="50" height="50"></a>
+            <div>
+                <h1>Hello, <?php echo $_SESSION['userName']; ?></h1> 
+                <h1>Choose youre game level: </h1>
+            </div>
+            <br> <br>
+            <a class="button" href="easy.html">Easy</a>
+            <br>
+            <a class="button" href="normal.html">Normal</a>
+            <br>
+            <a class="button" href="hard.html">Hard</a>
+            <script src="sketch.js"></script>
         </body>
     </html>
 
-<?php
-//}
-//else{
-//    header("Location: login.php");
-//    exit();
-
-//}
-?>
 
 
