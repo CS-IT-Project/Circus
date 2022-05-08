@@ -1,4 +1,3 @@
-
 <?php 
 session_start();
 ?>
@@ -23,6 +22,5 @@ session_start();
             <script src="sketch.js"></script>
         </body>
     </html>
-
 
 

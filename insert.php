@@ -4,10 +4,9 @@
 
     $userName = $_POST['userName'];
     $userPassword = $_POST['userPassword'];
-    $userScores = '0';
 
-    $sql = "INSERT INTO Account (userName, userPassword, userScores)
-    VALUES ('$userName', '$userPassword', '$userScores')";
+    $sql = "INSERT INTO Account (userName, userPassword)
+    VALUES ('$userName', '$userPassword')";
     
     if ($conn->query($sql)) {
         $_SESSION['userName'] = $userName;
